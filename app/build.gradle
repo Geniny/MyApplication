@@ -11,12 +11,13 @@ android {
         applicationId "com.example.myapplication"
         minSdkVersion 23
         targetSdkVersion 29
-        def minor = "${grgit.open(currentDir: rootDir).tag.list().size - 1}"
-        def headPatch = "${grgit.log(includes: ['HEAD']).size()}"
-        def tagPatch = "${grgit.log(includes: [grgit.describe(tags: true).split('-')[0]]).size()}"
-        int patch = headPatch.toInteger() - tagPatch.toInteger()
-        versionCode (patch + minor.toInteger() * 1000)
-        versionName "1.${minor}.${patch}"
+
+
+
+        def tag = "${grgit.describe(tags: true).split('-')[0]}"
+        def patch = "${grgit.describe(tags: true).split('-')[1]}"
+        versionCode (1)
+        versionName "${tag}.${patch}"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

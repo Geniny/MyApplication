@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private String id = "null";
     private TelephonyManager tm ;
     private String versionName = BuildConfig.VERSION_NAME;
-    private int READ_PERMISSION_CODE = 1;
+    private static int READ_PERMISSION_CODE = 1;
 
 
 
@@ -47,6 +47,11 @@ public class MainActivity extends AppCompatActivity {
                     catch (SecurityException e)
                     {
                         id = "null";
+                    }
+                    try {
+                        versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+                    } catch (PackageManager.NameNotFoundException e) {
+                        e.printStackTrace();
                     }
                     Toast.makeText(MainActivity.this,"Your device id:" + id + "\nYour version name: "+ versionName, Toast.LENGTH_SHORT).show();
 
