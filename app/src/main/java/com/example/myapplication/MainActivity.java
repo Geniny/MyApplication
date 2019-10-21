@@ -39,22 +39,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(ContextCompat.checkSelfPermission(MainActivity.this , Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
-                    tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-                    try
-                    {
-                        id = tm.getDeviceId();
-                    }
-                    catch (SecurityException e)
-                    {
-                        id = "null";
-                    }
-                    try {
-                        versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-                    } catch (PackageManager.NameNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    Toast.makeText(MainActivity.this,"Your device id:" + id + "\nYour version name: "+ versionName, Toast.LENGTH_SHORT).show();
-
+                    getInfo();
 
                 }
                 else
@@ -103,11 +88,31 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void getInfo()
+    {
+        tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        try
+        {
+            id = tm.getDeviceId();
+        }
+        catch (SecurityException e)
+        {
+            id = "null";
+        }
+        try {
+            versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        Toast.makeText(MainActivity.this,"Your device id:" + id + "\nYour version name: "+ versionName, Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == READ_PERMISSION_CODE )  {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, "Permission GRANTED", Toast.LENGTH_SHORT).show();
+                getInfo();
             } else {
                 Toast.makeText(this, "Permission DENIED", Toast.LENGTH_SHORT).show();
             }

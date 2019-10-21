@@ -14,10 +14,11 @@ android {
 
 
 
-        def tag = "${grgit.describe(tags: true).split('-')[0]}"
-        def patch = "${grgit.describe(tags: true).split('-')[1]}"
+        def tag = "${grgit.describe(longDescr: true)}"
+        def patch = "${grgit.describe(longDescr: true ).split('-')[1]}"
         versionCode (1)
         versionName "${tag}.${patch}"
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
